@@ -1,24 +1,61 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
-]
+    {
+      path: "/",
+      redirect: "/found"
+    },
+    {
+      path: "/found",
+      component: () => import("@/views/found/Found"),
+      children:[
+        {
+          path: "",
+          redirect: "recommend"
+        },
+        {
+          path: "recommend",
+          component: () => import("@/views/found/views/recommend/Recommend")
+        },
+        {
+          path: "songlist",
+          component: () => import("@/views/found/views/songlist/Songlist")
+        },
+        {
+          path: "radio",
+          component: () => import("@/views/found/views/radio/Radio")
+        },
+        {
+          path: "top",
+          component: () => import("@/views/found/views/top/Top")
+        },
+        {
+          path: "newsong",
+          component: () => import("@/views/found/views/newsong/Newsong")
+        }
+      ]
+    },
+    {
+      path: "/friend",
+      component: () => import("@/views/friend/Friend")
+    },
+    {
+      path: "/music",
+      component: () => import("@/views/music/Music")
+    },
+    {
+      path: "/mv",
+      component: () => import("@/views/mv/Mv")
+    },
+    {
+      path: "/account",
+      component: () => import("@/views/account/Account")
+    }
+    
+  ]
 
 const router = new VueRouter({
   mode: 'history',
