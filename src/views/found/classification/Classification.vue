@@ -1,4 +1,4 @@
-// 设置顶部分类
+
 <template>
     <div class="ification">
         <classification-item path="/found/recommend">
@@ -46,5 +46,9 @@ import classificationItem from './classificationItem.vue'
     text-align: center;
     line-height: 50px;
     border-bottom: 1px solid #ddd;
+    position: sticky;
+    top: 65px;
+    z-index: 1;
+    background-color: #fff;
 }
 </style>

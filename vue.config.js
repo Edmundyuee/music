@@ -7,7 +7,19 @@ module.exports = {
                 'common' : '@/common',
                 'components' : '@/components',
                 'network' : '@/network',
-                'views' : '@/views'
+                'views' : '@/views',
+                'commonjs' : '@/commonjs'
+            }
+        }
+    },
+    devServer: {
+        proxy: {
+            '/api': {
+                target: 'https://autumnfish.cn',
+                changeOrigin: true,
+                pathRewrite: {
+                    '^/api' : ''
+                }
             }
         }
     }

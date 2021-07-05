@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export function request(config) {
   const instance = new axios.create({
-    baseURL:'http://localhost:3000/',
+    baseURL:'/api',
     // baseURL:'http://adi-v3.dev',
     timeout:5000
   });

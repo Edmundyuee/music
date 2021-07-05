@@ -18,8 +18,7 @@
     height: 60px;
     bottom: 0px;
     display: flex;
-    box-shadow: 0 0 5px rgba(0, 0, 0, .3);
-    background-color: #f6f6f6;
+    background-color: #fff;
     padding-top: 5px;
     box-sizing: border-box;
 }

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="tabbar">
         <tabbar-items>
             <template v-slot:tabbar_item>
                 <tabbar-item path = "/found">
@@ -75,5 +75,8 @@
 </script>
 
 <style scoped>
-
+.tabbar{
+    position: fixed;
+    bottom: 0;
+}
 </style>
