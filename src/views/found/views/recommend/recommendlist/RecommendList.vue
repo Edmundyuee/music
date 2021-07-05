@@ -34,7 +34,7 @@ import {recomList} from '@/network/found'
             }
         },
         created(){
-            recomList(9).then((result) => {
+            recomList(15).then((result) => {
                 console.log(result.result);
                 this.res = result.result
             }).catch((err) => {
@@ -95,6 +95,8 @@ h2{
 }
 .images>img{
     width: 100px;
+    border-radius: 10px;
+    overflow: hidden;
 }
 .title{
     width: 100px;
@@ -110,6 +112,7 @@ h2{
 .play_count{
     height: 26px;
     padding: 0 5px;
+    padding-left: 15px;
     font-size: 8px;
     background-color: rgba(0,0,0,.3);
     color: #fff;
@@ -117,9 +120,13 @@ h2{
     top: 0;
     line-height: 26px;
     right: 0;
+    border-radius: 0 10px 0 5px;
 }
 .play_count>img{
+    position: absolute;
+    top: 7px;
     height: 12px;
+    left: 2px;
 }
 .recomLists{
     display: none;

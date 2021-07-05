@@ -12,9 +12,17 @@ export default new Vuex.Store({
         musicIndex: 0,
         autoPlay: false,
         recomListPage: false,
-        recomListID: 0
+        recomListID: 0,
+        isMvActive: false,
+        mvPlayId: 0
     },
     mutations:{
+      mvPlayID(state,id){
+        state.mvPlayId = id;
+      },
+      isMvActiveChange(state,flag){
+        state.isMvActive = flag
+      },
       autoPlay(state,auto){
         state.autoPlay = auto
       },

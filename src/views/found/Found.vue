@@ -51,12 +51,18 @@ import mvplay from './views/recommend/recommendlist/Mvplay'
         computed: {
             searchPages(){
                 return this.$store.state.searchPage;
+            },
+            isMvActiveChange(){
+                return this.$store.state.isMvActive;
             }
         },
         watch: {
             searchPages(newVal){
                 console.log(this.flag);
                 this.flag = newVal
+            },
+            isMvActiveChange(newVal){
+                
             }
         }
     }

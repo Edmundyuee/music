@@ -1,11 +1,11 @@
 <template>
-    <div>
+    <div class="broadPlay">
         <div class="broad_title">
             <h2>独家放送</h2>
             <span class="more">更多></span>
         </div>
         <div class="broad_list">
-            <span v-for="(item,index) in res" :key='index' @click="broadPlay(id)">
+            <span v-for="(item,index) in res" :key='index' @click="broadPlay(item.id)">
                 <div class="images">
                     <img :src="item.sPicUrl" alt="">
                     <span class="title">
@@ -30,15 +30,16 @@ import {broadList} from '@/network/found'
             return{
                 res: '',
                 palyCount: '',
-                isActive: false
+                isMvActive: false
             }
         },
         components:{
-            mvplay
         },
         methods: {
             broadPlay(id){
-                this.isActive = true
+                this.$store.commit('mvPlayID',id)
+                console.log(id);
+                this.$store.commit('isMvActiveChange',true)
             }
         },
         created(){
@@ -65,6 +66,9 @@ import {broadList} from '@/network/found'
 h2{
     display: inline-block;
 }
+.broadPlay{
+    margin-bottom: 120px;
+}
 .broad_title{
     position: relative;
 }
@@ -78,6 +82,7 @@ h2{
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
+    
 }
 .broad_list>span{
     position: relative;
@@ -92,6 +97,8 @@ h2{
 }
 .images>img{
     width: 150px;
+    border-radius: 10px;
+    overflow: hidden;
 }
 .title{
     width: 150px;
