@@ -147,7 +147,7 @@ export default {
       loginActive: false,
       qrstate: 801,
       timer: "",
-      loginState: false,
+      loginState: true,
       level: '',
       followeds: '',
       follows: '',
@@ -155,6 +155,15 @@ export default {
       nickname: '',
       loginOutActive: false
     };
+  },
+  mounted(){
+    // this.loginState = this.$store.state.loginState;
+    this.getStates();
+  },
+  watch:{
+    loginState(newVal){
+      this.$store.commit('changeLoginState',newVal)
+    }
   },
   methods: {
     login_page() {
@@ -170,21 +179,26 @@ export default {
     getLogin() {
       let timestamp = Date.now();
       let code;
+      //1.获取登录的key
       getQrKey(timestamp)
         .then((result) => {
           const key = result.data.unikey;
           console.log(result);
           console.log(key);
+          //2.获取当前登录的二维码信息
           getQrCreate(key)
             .then((result) => {
               console.log(result);
-              this.$refs.qr_img.src = result.data.qrimg;
               clearInterval(this.timer);
+              this.$refs.qr_img.src = result.data.qrimg;
+              //获取到key之后设置interval来循环检测当前登录状态指令
               this.timer = setInterval(() => {
+                //通过登录的key来获取当前登录状态
                 getLoginState(key)
                   .then((result) => {
                     console.log(result);
                     code = result.code;
+                    //判断当前处在登录的那个阶段
                     if (code === 800) {
                       this.qrstate = 800;
                       clearInterval(this.timer);
@@ -199,21 +213,8 @@ export default {
                       this.close_page();
                       clearInterval(this.timer);
                       this.loginState = true;
-                      getState().then((result) => {
-                          console.log(result);
-                          this.avatarUrl = result.data.profile.avatarUrl
-                          this.nickname = result.data.profile.nickname
-                          getUserDetail(result.data.profile.userId).then((result) => {
-                                console.log(result);
-                                this.level = result.level;
-                                this.followeds = result.profile.followeds;
-                                this.follows = result.profile.follows;
-                          }).catch((err) => {
-                              
-                          });
-                      }).catch((err) => {
-                          
-                      });
+                      //当登录指令变为803时说明用户授权成功，获取用户的详细信息
+                      this.getStates();
                     }
                   })
                   .catch((err) => {});
@@ -223,15 +224,38 @@ export default {
         })
         .catch((err) => {});
     },
+    getStates(){
+      getState().then((result) => {
+                          console.log(result);
+                          //将获取到的用户信息逐个赋值给已设置的参数，从而渲染到页面中
+                          this.avatarUrl = result.data.profile.avatarUrl
+                          this.nickname = result.data.profile.nickname
+                          getUserDetail(result.data.profile.userId).then((result) => {
+                                console.log(result);
+                                this.level = result.level;
+                                this.followeds = result.profile.followeds;
+                                this.follows = result.profile.follows;
+                                tihs.loginState = true
+                                this.$store.dispatch('changeLoginS',true)
+                          }).catch((err) => {
+                              
+                          });
+                      }).catch((err) => {
+                          
+                    });
+    },
     loginOut(){
       this.loginOutActive = true;
     },
     yes_out(){
+      //退出登录确定，执行退出登录指令
       loginOut().then((result) => {
         console.log(result);
         if(result.code===200){
           this.loginOutActive = false;
           this.resetAccount();
+          //用户退出登录更改在store中存储的登录数据
+          this.$store.commit('changeLoginState',false)
       }
         
       }).catch((err) => {

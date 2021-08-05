@@ -78,5 +78,6 @@
 .tabbar{
     position: fixed;
     bottom: 0;
+    z-index: 5;
 }
 </style>

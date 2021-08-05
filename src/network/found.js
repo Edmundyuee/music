@@ -80,3 +80,13 @@ export function loginOut(){
         url: '/logout'
     })
 }
+export function userSubcount(){
+    return request({
+        url: '/user/subcount'
+    })
+}
+export function userPlayList(id){
+    return request({
+        url: '/user/playlist?uid=' + id
+    })
+}

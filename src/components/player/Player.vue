@@ -248,16 +248,16 @@ export default {
     },
   },
   created() {
-    getPlayList(2799125848).then((result) => {
+    getPlayList(3023256656).then((result) => {
       result.playlist.trackIds.forEach(element => { 
         this.playListss.push(element.id)
+        });
+        console.log(result);
+        console.log(this.playListss);
+        this.lazeload(this.playListss)
+        // this.musicActive();
+        }).catch((err) => {
       });
-      console.log(result);
-      console.log(this.playListss);
-      this.lazeload(this.playListss)
-      }).catch((err) => {
-      
-    });
     getMusic(this.$store.state.musicId)
       .then((result) => {
         // console.log(result);
@@ -322,9 +322,27 @@ export default {
     },
     musicIndex(){
       return this.$store.state.musicIndex;
+    },
+    playListID(){
+      return this.$store.state.playListID;
     }
   },
   watch: {
+    playListID(newVal){
+      this.$store.commit('resetList');
+      setTimeout(()=>{
+        this.$store.commit('resetMusicIndex');
+      },1000)
+      getPlayList(newVal).then((result) => {
+      result.playlist.trackIds.forEach(element => { 
+        this.playListss.push(element.id)
+        });
+        console.log(result);
+        console.log(this.playListss);
+        this.lazeload(this.playListss)
+        }).catch((err) => {
+      });
+    },
     musicIndex(newVal){
       this.$store.commit('changeMusic',this.$store.state.play_list[newVal].id)
       this.resetData()

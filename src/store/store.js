@@ -9,14 +9,25 @@ export default new Vuex.Store({
         isActive: false,
         first: 0,
         play_list: [],
-        musicIndex: 0,
+        musicIndex: -1,
         autoPlay: false,
         recomListPage: false,
         recomListID: 0,
         isMvActive: false,
-        mvPlayId: 0
+        mvPlayId: 0,
+        loginState: true,
+        playListID: ''
     },
     mutations:{
+      resetMusicIndex(state){
+        state.musicIndex = 0;
+      },
+      resetList(state){
+        state.play_list = []
+      },
+      changePlayListID(state,id){
+        state.playListID = id;
+      },
       mvPlayID(state,id){
         state.mvPlayId = id;
       },
@@ -76,6 +87,17 @@ export default new Vuex.Store({
       },
       recomListID(state,id){
         state.recomListID = id
+      },
+      changeLoginState(loginState){
+        console.log("执行loginstate:"+ loginState);
+        state.loginState = loginState;
+      }
+    },
+    actions:{
+      changeLoginS({commit}, loginState){
+        console.log("执行active:" + loginState);
+        console.log(commit);
+        commit('changeLoginState',loginState)
       }
     }
 })
