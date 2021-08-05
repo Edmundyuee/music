@@ -330,6 +330,7 @@ export default {
   watch: {
     playListID(newVal){
       this.$store.commit('resetList');
+      //通过延迟1s来等待playlist列表加载执行播放第一首歌
       setTimeout(()=>{
         this.$store.commit('resetMusicIndex');
       },1000)
