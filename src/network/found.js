@@ -50,3 +50,33 @@ export function getMvFirst(){
         url: '/mv/first?limit=10'
     })
 }
+export function getQrKey(timestamp){
+    return request({
+        url: `/login/qr/key?timestamp=${Date.now()}`
+    })
+}
+export function getQrCreate(key){
+    return request({
+        url: `/login/qr/create?qrimg=true&timestamp=${Date.now()}&key=` + key
+    })
+}
+export function getLoginState(key){
+    return request({
+        url: `/login/qr/check?timestamp=${Date.now()}&key=` + key
+    })
+}
+export function getState(){
+    return request({
+        url: '/login/status'
+    })
+}
+export function getUserDetail(id){
+    return request({
+        url: '/user/detail?uid=' + id
+    })
+}
+export function loginOut(){
+    return request({
+        url: '/logout'
+    })
+}

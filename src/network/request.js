@@ -4,7 +4,8 @@ export function request(config) {
   const instance = new axios.create({
     baseURL:'/api',
     // baseURL:'http://adi-v3.dev',
-    timeout:5000
+    timeout:5000,
+    withCredentials: true
   });
 
   // 请求拦截器
