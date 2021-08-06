@@ -20,6 +20,26 @@ export function broadList(){
         url: '/personalized/privatecontent/list?limit=6'
     })
 }
+export function newMv(){
+    return request({
+        url: '/mv/first?limit=6'
+    })
+}
+export function personalizedMv(){
+    return request({
+        url: '/personalized/mv'
+    })
+}
+export function likeMv(id){
+    return request({
+        url: '/simi/mv?mvid=' + id
+    })
+}
+export function topMv(){
+    return request({
+        url: '/top/mv?limit=10'
+    })
+}
 export function getPlayList(id){
      return request({
          url: '/playlist/detail?id=' + id

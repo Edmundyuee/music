@@ -60,7 +60,25 @@ const routes = [
     },
     {
       path: "/mv",
-      component: () => import("@/views/mv/Mv")
+      component: () => import("@/views/mv/Mv"),
+      children:[
+        {
+          path: "",
+          redirect: "selected"
+        },
+        {
+          path: "selected",
+          component: () => import("@/views/mv/views/selected/Selected")
+        },
+        {
+          path: "sole",
+          component: () => import("@/views/mv/views/sole/Sole")
+        },
+        {
+          path: "whole",
+          component: () => import("@/views/mv/views/whole/Whole")
+        }
+      ]
     },
     {
       path: "/account",

@@ -2,7 +2,7 @@
   <div ref="mvplay" class="mvplay">
     <div class="title">
       <img src="@/assets/img/return.svg" alt="" @click="returns" />
-      独家放送
+      视频播放
     </div>
     <div class="play_mv" ref="playmv">
       <video height="100%" :src="mvUrl" autoplay controls></video>
@@ -30,7 +30,7 @@
       </div>
     </div>
     <div class="beSimilarMv">
-      <h3>最新MV</h3>
+      <h3>相似MV</h3>
       <div class="mvlist">
         <ul class="uls">
           <li
@@ -62,9 +62,7 @@
 </template>
 
 <script>
-import { mvPlay } from "@/network/found";
-import { getMvUrl } from "@/network/found";
-import { getMvFirst } from "@/network/found";
+import { mvPlay,getMvFirst,getMvUrl,likeMv } from "@/network/found";
 export default {
   name: "Mvplay",
   data() {
@@ -147,12 +145,12 @@ export default {
           this.mvUrl = result.data.url;
         })
         .catch((err) => {});
-      getMvFirst()
-        .then((result) => {
-          console.log(result);
-          this.newMvList = result.data;
-        })
-        .catch((err) => {});
+        likeMv(newVal).then((result) => {
+            console.log(result);
+            this.newMvList = result.mvs;
+        }).catch((err) => {
+          
+        });
     },
   },
   filters: {

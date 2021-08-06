@@ -79,14 +79,10 @@ export default {
     },
   },
   updated() {
-    if(this.$refs.lis.length){
       console.log(this.$refs.lis.length);
-    }else{
-      console.log("不存在");
       for (let i = 0; i < this.$refs.lis.length; i++) {
       if (i % 2 == 0) {
         this.$refs.lis[i].style.backgroundColor = "#f9f9f9";
-      }
     }
     }
   },
