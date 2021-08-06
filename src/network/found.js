@@ -20,6 +20,11 @@ export function broadList(limit){
         url: '/personalized/privatecontent/list?limit=' + limit
     })
 }
+export function allMv(area,type,order){
+    return request({
+        url: '/mv/all?area=' + area +'&type='+ type + '&order='+ order
+    })
+}
 export function newMv(){
     return request({
         url: '/mv/first?limit=6'
