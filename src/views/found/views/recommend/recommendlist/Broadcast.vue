@@ -43,7 +43,7 @@ import {broadList} from '@/network/found'
             }
         },
         created(){
-            broadList().then((result) => {
+            broadList(6).then((result) => {
                 console.log(result.result);
                 this.res = result.result
             }).catch((err) => {

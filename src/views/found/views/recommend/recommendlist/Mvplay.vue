@@ -323,7 +323,6 @@ export default {
   line-height: 30px;
   padding-top: 8px;
   box-sizing: border-box;
-  vertical-align: bottom;
 }
 .mvplays {
   width: 20px;

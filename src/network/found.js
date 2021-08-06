@@ -15,9 +15,9 @@ export function recomList(limit){
         url: '/personalized?limit=' + limit
     })
 }
-export function broadList(){
+export function broadList(limit){
     return request({
-        url: '/personalized/privatecontent/list?limit=6'
+        url: '/personalized/privatecontent/list?limit=' + limit
     })
 }
 export function newMv(){
