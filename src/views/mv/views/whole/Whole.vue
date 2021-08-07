@@ -136,18 +136,14 @@ export default {
     let targets;
     //找到select
     select.forEach((element) => {
-      console.log(element.children[0].children[0]);
       el = element.children[0].children[0];
       //给当前元素添加data-touch来存储当前的点击状态
       el.dataset.touch = "false";
       el.addEventListener("click", (ev) => {
-        console.log(ev.target.parentNode);
         targets = ev.target;
         //判断当前选项是否已经点击，防止用户重复点击导致重新加载页面
         if (targets.dataset.touch === "false") {
-          console.log("执行");
           select.forEach((element) => {
-            console.log();
             //重置其他选项默认值
             element.children[0].children[0].style.backgroundColor = "";
             element.children[0].children[0].style.color = "";
@@ -158,7 +154,6 @@ export default {
           this.searhList[0] = ev.target.innerText;
           ev.target.style.backgroundColor = "rgb(155,155,155)";
           ev.target.style.color = "#fff";
-          console.log(this.searhList);
           allMv(this.searhList[0], this.searhList[1], this.searhList[2])
             .then((result) => {
               this.res = result.data;
@@ -169,18 +164,14 @@ export default {
       });
     });
     type.forEach((element) => {
-      console.log(element.children[0].children[0]);
       el = element.children[0].children[0];
       //给当前元素添加data-touch来存储当前的点击状态
       el.dataset.touch = "false";
       el.addEventListener("click", (ev) => {
-        console.log(ev.target.parentNode);
         targets = ev.target;
         //判断当前选项是否已经点击，防止用户重复点击导致重新加载页面
         if (targets.dataset.touch === "false") {
-          console.log("执行");
           type.forEach((element) => {
-            console.log();
             //重置其他选项默认值
             element.children[0].children[0].style.backgroundColor = "";
             element.children[0].children[0].style.color = "";
@@ -191,7 +182,6 @@ export default {
           this.searhList[1] = ev.target.innerText;
           ev.target.style.backgroundColor = "rgb(155,155,155)";
           ev.target.style.color = "#fff";
-          console.log(this.searhList);
           allMv(this.searhList[0], this.searhList[1], this.searhList[2])
             .then((result) => {
               this.res = result.data;
@@ -202,18 +192,14 @@ export default {
       });
     });
     order.forEach((element) => {
-      console.log(element.children[0].children[0]);
       el = element.children[0].children[0];
       //给当前元素添加data-touch来存储当前的点击状态
       el.dataset.touch = "false";
       el.addEventListener("click", (ev) => {
-        console.log(ev.target.parentNode);
         targets = ev.target;
         //判断当前选项是否已经点击，防止用户重复点击导致重新加载页面
         if (targets.dataset.touch === "false") {
-          console.log("执行");
           order.forEach((element) => {
-            console.log();
             //重置其他选项默认值
             element.children[0].children[0].style.backgroundColor = "";
             element.children[0].children[0].style.color = "";
@@ -224,7 +210,6 @@ export default {
           this.searhList[2] = ev.target.innerText;
           ev.target.style.backgroundColor = "rgb(155,155,155)";
           ev.target.style.color = "#fff";
-          console.log(this.searhList);
           allMv(this.searhList[0], this.searhList[1], this.searhList[2])
             .then((result) => {
               this.res = result.data;
@@ -244,6 +229,9 @@ export default {
 </script>
 
 <style scoped>
+.whole{
+  margin-bottom: 120px;
+}
 .selecteds {
   width: 100%;
 }

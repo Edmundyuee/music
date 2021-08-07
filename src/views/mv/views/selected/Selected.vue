@@ -2,7 +2,7 @@
   <div class="selected">
     <div class="mv_title">
       <h2>最新mv</h2>
-      <span class="more">更多></span>
+      <span class="more" @click="more_mvs">更多></span>
     </div>
     <div class="mv_list">
       <span
@@ -27,7 +27,7 @@
 
     <div class="mv_title">
       <h2>热播mv</h2>
-      <span class="more">更多></span>
+      <span class="more" @click="more_mvs">更多></span>
     </div>
     <div class="mv_list">
       <span
@@ -49,7 +49,7 @@
     <div class="top_mv">
       <div class="mv_title">
         <h2>排行榜</h2>
-        <span class="more">更多></span>
+        <span class="more" @click="more_mvs">更多></span>
       </div>
       <ul class="rankingList">
         <li
@@ -88,6 +88,9 @@ export default {
     };
   },
   methods: {
+    more_mvs(){
+      this.$router.replace('/mv/whole');
+    },
     broadPlay(id) {
       this.$store.commit("mvPlayID", id);
       console.log(id);

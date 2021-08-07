@@ -33,7 +33,12 @@
         </li>
       </ul>
     </div>
-    <div class="login_info" v-else>请先登录</div>
+    <div class="login_info" v-else>
+      <div class="login_prompt">
+        <span>您还没有登录，请先登录后再试！！！</span>
+        <button class="login_btn" @click="replace_login">点击登录</button>
+      </div>
+    </div>
     <div class="showList" v-if="showListActive">
       <div class="re_title">
           <img src="@/assets/img/return_b.svg" alt="" @click="closeList" />
@@ -93,6 +98,7 @@
           v-for="(item,index) in songsList"
           :key="item.id"
           @click.prevent="playMusic(item.id)"
+          :class="[(item.st==0)?active:'']"
         >
           <div class="num" v-if="!(item.id == musicID)">
             {{ index + 1 }}
@@ -150,6 +156,9 @@ export default {
     this.loginStates();
   },
   methods: {
+    replace_login(){
+      this.$router.replace('/account')
+    },
     play_all(){
       this.$store.commit('changePlayListID',this.listId);
       console.log('执行成功');
@@ -168,7 +177,7 @@ export default {
         }).catch((err) => {
             
         });
-      getPlayList(id).then((result) => {
+      getPlayList(id,this.$store.state.cookie).then((result) => {
           this.showListActive = true;
           console.log(result);
           this.playListDetail = result.playlist;
@@ -176,7 +185,6 @@ export default {
                   this.myListId.push(element.id);
                 });
                 this.loadList(this.myListId)
-
                 console.log(this.myListId);
       }).catch((err) => {
           console.log(err);
@@ -255,6 +263,12 @@ export default {
 </script>
 
 <style scoped>
+.acitve{
+  opacity: 1;
+}
+.notactive{
+  opacity: 0.5;
+}
 .title {
   height: 50px;
   line-height: 50px;
@@ -293,6 +307,24 @@ export default {
 }
 .login_info {
   margin-top: 100px;
+}
+.login_prompt{
+  width: 200px;
+  height: 150px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+}
+.login_btn{
+  width: 100px;
+  height: 40px;
+  background-color: #d81e06;
+  color: #fff;
+  border: none;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%,0);
 }
 .list {
   margin: 10px 0;

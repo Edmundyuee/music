@@ -87,7 +87,8 @@ h2{
 .broad_list>span{
     position: relative;
     text-align: center;
-    padding-top: 12.5px;
+    /* padding-top: 12.5px; */
+    padding: 12.5px 5px 0px;
     margin-bottom: 20px;
 }
 .images{

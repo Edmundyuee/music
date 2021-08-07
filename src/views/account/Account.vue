@@ -3,35 +3,35 @@
     <h2 class="title">账号</h2>
     <ul class="login_btn">
       <li v-if="!loginState">
-                <span class="title_explain">
-                    登录网易云音乐，<br>
-                    手机电脑多端同步，320k高音质无限下载
-                </span>
-                <button @click="login_page" class="loginBtn">立即登录</button>
-            </li>
-      
+        <span class="title_explain">
+          登录网易云音乐，<br />
+          手机电脑多端同步，320k高音质无限下载
+        </span>
+        <button @click="login_page" class="loginBtn">立即登录</button>
+      </li>
+
       <li class="account_info" v-else-if="loginState">
         <div class="info">
           <img :src="avatarUrl" class="headPortrait" alt="" />
-          <span class="name">{{nickname}}</span>
+          <span class="name">{{ nickname }}</span>
           <span class="edit_info">
-              <img class="edit" src="@/assets/img/edit.svg" alt="">
-              编辑
+            <img class="edit" src="@/assets/img/edit.svg" alt="" />
+            编辑
           </span>
         </div>
         <div class="self_info">
-            <div class="fans">
-                粉丝<br>
-                {{followeds}}
-            </div>
-            <div class="follow">
-                关注<br>
-                {{follows}}
-            </div>
-            <div class="grade">
-                等级<br>
-                lv{{level}}
-            </div>
+          <div class="fans">
+            粉丝<br />
+            {{ followeds }}
+          </div>
+          <div class="follow">
+            关注<br />
+            {{ follows }}
+          </div>
+          <div class="grade">
+            等级<br />
+            lv{{ level }}
+          </div>
         </div>
       </li>
     </ul>
@@ -137,8 +137,8 @@ import { getQrKey } from "@/network/found";
 import { getQrCreate } from "@/network/found";
 import { getLoginState } from "@/network/found";
 import { getState } from "@/network/found";
-import { getUserDetail } from "@/network/found"
-import { loginOut } from "@/network/found"
+import { getUserDetail } from "@/network/found";
+import { loginOut } from "@/network/found";
 // import { getMvFirst } from '@network/found';
 export default {
   name: "Account",
@@ -147,31 +147,52 @@ export default {
       loginActive: false,
       qrstate: 801,
       timer: "",
-      loginState: true,
-      level: '',
-      followeds: '',
-      follows: '',
-      avatarUrl: '',
-      nickname: '',
-      loginOutActive: false
+      loginState: false,
+      level: "",
+      followeds: "",
+      follows: "",
+      avatarUrl: "",
+      nickname: "",
+      loginOutActive: false,
+      cookie: "",
     };
   },
-  mounted(){
+  mounted() {
     // this.loginState = this.$store.state.loginState;
     this.getStates();
+    this.loginState = this.$store.state.loginState;
   },
-  watch:{
-    loginState(newVal){
-      this.$store.commit('changeLoginState',newVal)
-    }
+  watch: {
+    loginState(newVal) {
+      this.$store.commit("changeLoginState", newVal);
+    },
+    cookie(newVal) {
+      this.$store.commit("changeCookie", newVal);
+    },
   },
   methods: {
     login_page() {
       this.loginActive = true;
       this.getLogin();
+      //关闭滚动条
+      let mo = function (e) {
+        e.preventDefault();
+      };
+      document.body.style.overflow = "hidden";
+      document.addEventListener("touchmove", mo, false);
     },
     close_page() {
       this.loginActive = false;
+      //开启滚动条
+      var mo = function (e) {
+        e.preventDefault();
+      };
+      document.body.style.overflow = ""; //出现滚动条
+      document.removeEventListener("touchmove", mo, false);
+      if (this.timer != "") {
+        //关闭时候同时取消对登录扫码状态监听
+        clearInterval(this.timer);
+      }
     },
     refresh() {
       this.getLogin();
@@ -197,6 +218,7 @@ export default {
                 getLoginState(key)
                   .then((result) => {
                     console.log(result);
+                    console.log();
                     code = result.code;
                     //判断当前处在登录的那个阶段
                     if (code === 800) {
@@ -213,6 +235,7 @@ export default {
                       this.close_page();
                       clearInterval(this.timer);
                       this.loginState = true;
+                      this.cookie = encodeURIComponent(result.cookie);
                       //当登录指令变为803时说明用户授权成功，获取用户的详细信息
                       this.getStates();
                     }
@@ -224,56 +247,55 @@ export default {
         })
         .catch((err) => {});
     },
-    getStates(){
-      getState().then((result) => {
-                          console.log(result);
-                          //将获取到的用户信息逐个赋值给已设置的参数，从而渲染到页面中
-                          this.avatarUrl = result.data.profile.avatarUrl
-                          this.nickname = result.data.profile.nickname
-                          getUserDetail(result.data.profile.userId).then((result) => {
-                                console.log(result);
-                                this.level = result.level;
-                                this.followeds = result.profile.followeds;
-                                this.follows = result.profile.follows;
-                                tihs.loginState = true
-                                this.$store.dispatch('changeLoginS',true)
-                          }).catch((err) => {
-                              
-                          });
-                      }).catch((err) => {
-                          
-                    });
+    getStates() {
+      getState()
+        .then((result) => {
+          console.log(result);
+          //将获取到的用户信息逐个赋值给已设置的参数，从而渲染到页面中
+          this.avatarUrl = result.data.profile.avatarUrl;
+          this.nickname = result.data.profile.nickname;
+          getUserDetail(result.data.profile.userId)
+            .then((result) => {
+              console.log(result);
+              this.level = result.level;
+              this.followeds = result.profile.followeds;
+              this.follows = result.profile.follows;
+              tihs.loginState = true;
+              this.$store.dispatch("changeLoginS", true);
+            })
+            .catch((err) => {});
+        })
+        .catch((err) => {});
     },
-    loginOut(){
+    loginOut() {
       this.loginOutActive = true;
     },
-    yes_out(){
+    yes_out() {
       //退出登录确定，执行退出登录指令
-      loginOut().then((result) => {
-        console.log(result);
-        if(result.code===200){
-          this.loginOutActive = false;
-          this.resetAccount();
-          //用户退出登录更改在store中存储的登录数据
-          this.$store.commit('changeLoginState',false)
-      }
-        
-      }).catch((err) => {
-        
-      });
+      loginOut()
+        .then((result) => {
+          console.log(result);
+          if (result.code === 200) {
+            this.loginOutActive = false;
+            this.resetAccount();
+            //用户退出登录更改在store中存储的登录数据
+            this.$store.commit("changeLoginState", false);
+          }
+        })
+        .catch((err) => {});
     },
-    no_out(){
+    no_out() {
       this.loginOutActive = false;
     },
-    resetAccount(){
+    resetAccount() {
       this.loginState = false;
       this.loginActive = false;
-      this.level =  '';
-      this.followeds = '';
-      this.follows = '';
-      this.avatarUrl = '';
-      this.nickname = '';
-    }
+      this.level = "";
+      this.followeds = "";
+      this.follows = "";
+      this.avatarUrl = "";
+      this.nickname = "";
+    },
   },
 };
 </script>
@@ -301,34 +323,34 @@ export default {
   line-height: 50px;
   position: relative;
 }
-.self_info{
-    width: 100%;
-    display: flex;
-    margin-top: 20px;
-    border-top: 1px solid #f2f2f2;
-    padding-top: 5px;
+.self_info {
+  width: 100%;
+  display: flex;
+  margin-top: 20px;
+  border-top: 1px solid #f2f2f2;
+  padding-top: 5px;
 }
-.self_info>div{
-    flex: 1;
-    text-align: center;
+.self_info > div {
+  flex: 1;
+  text-align: center;
 }
-.self_info>div:not(:last-of-type){
-    border-right: 1px solid #f2f2f2;
+.self_info > div:not(:last-of-type) {
+  border-right: 1px solid #f2f2f2;
 }
-.edit_info{
-    display: inline-block;
-    width: 40px;
-    padding-left: 30px;
-    position: absolute;
-    right: 0px;
+.edit_info {
+  display: inline-block;
+  width: 40px;
+  padding-left: 30px;
+  position: absolute;
+  right: 0px;
 }
-.edit{
-    width: 25px;
-    height: 25px;
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translate(0,-50%);
+.edit {
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translate(0, -50%);
 }
 .account_info {
   width: 100%;
@@ -483,7 +505,7 @@ ul:not(:first-of-type) > li > img {
   padding-top: 45px;
   box-sizing: border-box;
 }
-.loginOut{
+.loginOut {
   width: 80%;
   height: 50px;
   border-radius: 25px;
@@ -494,16 +516,16 @@ ul:not(:first-of-type) > li > img {
   left: 50%;
   transform: translate(-50%);
 }
-.loginOuts{
+.loginOuts {
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba(0,0,0,.3);
+  background-color: rgba(0, 0, 0, 0.3);
   z-index: 11;
 }
-.loginOutPage{
+.loginOutPage {
   width: 300px;
   height: 200px;
   background-color: #fff;
@@ -511,24 +533,23 @@ ul:not(:first-of-type) > li > img {
   position: absolute;
   top: 40%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   overflow: hidden;
 }
-.loginOutPage>span{
+.loginOutPage > span {
   width: 100%;
   display: block;
   text-align: center;
   margin-top: 30px;
   font-size: 20px;
 }
-.out_btn{
+.out_btn {
   width: 100%;
   position: absolute;
   bottom: 0;
   display: flex;
-
 }
-.out_btn>button{
+.out_btn > button {
   flex: 1;
   height: 40px;
   border: 1px solid #f2f2f2;

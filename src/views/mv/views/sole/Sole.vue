@@ -2,7 +2,7 @@
   <div class="sole">
     <div class="mv_title">
       <h2>独家视频</h2>
-      <span class="more">更多></span>
+      <span class="more" @click="more_mvs">更多></span>
     </div>
     <div class="mv_list">
       <span
@@ -37,6 +37,9 @@ export default {
     };
   },
   methods: {
+    more_mvs(){
+      this.$router.replace('/mv/whole');
+    },
     broadPlay(id) {
       this.$store.commit("mvPlayID", id);
       console.log(id);
@@ -57,6 +60,9 @@ export default {
 </script>
 
 <style scoped>
+.sole{
+  margin-bottom: 120px;
+}
 h2 {
   display: inline-block;
 }

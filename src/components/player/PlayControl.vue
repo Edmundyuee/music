@@ -133,7 +133,6 @@ export default{
     playControls(newval) {
       console.log(newval);
       if (newval) {
-        console.log(this.$refs.playcontrol.style);
         this.$refs.playcontrol.style.display = "block";
         //页面弹出限制滚动条
         let mo = function (e) {

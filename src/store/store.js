@@ -15,10 +15,14 @@ export default new Vuex.Store({
         recomListID: 0,
         isMvActive: false,
         mvPlayId: 0,
-        loginState: true,
-        playListID: ''
+        loginState: false,
+        playListID: '',
+        cookie: ''
     },
     mutations:{
+      changeCookie(state,cookie){
+        state.cookie = cookie;
+      },
       resetMusicIndex(state){
         state.musicIndex = 0;
       },
@@ -88,7 +92,7 @@ export default new Vuex.Store({
       recomListID(state,id){
         state.recomListID = id
       },
-      changeLoginState(loginState){
+      changeLoginState(state,loginState){
         console.log("执行loginstate:"+ loginState);
         state.loginState = loginState;
       }

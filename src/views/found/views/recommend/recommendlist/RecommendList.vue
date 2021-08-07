@@ -85,8 +85,12 @@ h2{
     flex: 1;
     align-self: flex-start;
     /* text-align: center; */
-    padding-top: 12.5px;
+    padding: 12.5px 5px 0px;
     margin-bottom: 20px;
+}
+.recom_list::after {
+    content: '';
+    flex: auto;    /* 或者flex: 1 */
 }
 .images{
     display: inline-block;
