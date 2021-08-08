@@ -48,7 +48,7 @@ import classificationItem from './classificationItem.vue'
     border-bottom: 1px solid #ddd;
     position: sticky;
     top: 65px;
-    z-index: 1;
+    z-index: 2;
     background-color: #fff;
 }
 </style>

@@ -110,7 +110,7 @@ export function getUserDetail(id) {
 }
 export function loginOut() {
     return request({
-        url: `/logout?timestamp=${Date.now()}`
+        url: `/logout`
     })
 }
 export function userSubcount() {
@@ -126,5 +126,30 @@ export function userPlayList(id) {
 export function topList(){
     return request({
         url: '/toplist'
+    })
+}
+export function getTags(){
+    return request({
+        url: '/playlist/highquality/tags'
+    })
+}
+export function getTopList(tag){
+    return request({
+        url: '/top/playlist/highquality?cat=' + tag
+    })
+}
+export function getDjBanner(){
+    return request({
+        url: '/dj/banner'
+    })
+}
+export function getRadioRecommend(limit){
+    return request({
+        url: '/dj/personalize/recommend?limit=' + limit
+    })
+}
+export function getAlbum(){
+    return request({
+        url: '/album/new?area=KR&limit=100'
     })
 }

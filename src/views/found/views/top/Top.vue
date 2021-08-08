@@ -267,10 +267,6 @@ h2 {
   flex: 2;
   padding: 0px 20px 0px 0px;
 }
-.list_img > img {
-  width: 120px;
-  height: 120px;
-}
 .music_name_wai {
   display: inline-block;
   flex: 3;

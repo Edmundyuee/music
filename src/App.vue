@@ -9,16 +9,37 @@
 import tabbar from "@/components/tabbar/Tabbar"
 import player from "@/components/player/Player"
 import PlayControl from "@/components/player/PlayControl"
+import { getState } from "@/network/found";
 export default {
   components: {
     tabbar,
     player,
     PlayControl
   },
+  data(){
+    return{
+      login_state: false
+    }
+  },
   methods:{
     playstates(state){
       this.isActive = state
     }
+  },
+  watch:{
+    login_state(newVal){
+      this.$store.commit('changeLoginState',newVal)
+    }
+  },
+  created(){
+    getState().then((result) => {
+      console.log(result);
+      if(result.data.account != null){
+        this.login_state = true
+      }
+    }).catch((err) => {
+      
+    });
   }
 }
 </script>

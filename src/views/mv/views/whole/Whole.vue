@@ -1,5 +1,5 @@
 <template>
-  <div class="whole">
+  <div class="whole" ref="whole" @touchmove.stop>
     <ul class="selecteds">
       <li>
         <div class="area">地区：</div>
@@ -123,6 +123,14 @@ export default {
   },
   methods: {
     broadPlay(id) {
+      // this.$refs.whole.style.overflowY = 'none';
+      //页面弹出限制滚动条
+        //页面弹出限制滚动条
+        let mo = function (e) {
+          e.preventDefault();
+        };
+        document.body.style.overflow = "hidden";
+        document.addEventListener("touchmove", mo, false);
       this.$store.commit("mvPlayID", id);
       console.log(id);
       this.$store.commit("isMvActiveChange", true);

@@ -98,7 +98,6 @@
           v-for="(item,index) in songsList"
           :key="item.id"
           @click.prevent="playMusic(item.id)"
-          :class="[(item.st==0)?active:'']"
         >
           <div class="num" v-if="!(item.id == musicID)">
             {{ index + 1 }}
@@ -128,8 +127,7 @@
 </template>
 
 <script>
-import { userSubcount, userPlayList, getState,getPlayList } from "@/network/found";
-import { recomLists } from "@/commonjs/recomList";
+import { userPlayList, getState,getPlayList } from "@/network/found";
 import { getSongDetail } from "@/network/player";
 export default {
   name: "Music",
@@ -171,14 +169,8 @@ export default {
     },
     showList(id) {
         this.listId = id;
-        getState().then((result) => {
-            // console.log(result);
-            
-        }).catch((err) => {
-            
-        });
+        this.showListActive = true;
       getPlayList(id,this.$store.state.cookie).then((result) => {
-          this.showListActive = true;
           console.log(result);
           this.playListDetail = result.playlist;
           result.playlist.trackIds.forEach((element) => {
@@ -228,11 +220,11 @@ export default {
     },
     loginStates() {
       //用于判断用户当前是否登录
-      this.loginState = this.$store.state.loginState;
-      if (this.loginState) {
         getState()
           .then((result) => {
-            userPlayList(result.data.profile.userId)
+            if(result.data.account != null){
+              this.loginState = true;
+              userPlayList(result.data.profile.userId)
               .then((result) => {
                 console.log(result.playlist);
                 result.playlist.forEach((element) => {
@@ -245,10 +237,15 @@ export default {
                 console.log(this.establish, this.collection);
               })
               .catch((err) => {});
+            }else{
+
+            }
+
+
+            
           })
           .catch((err) => {});
       }
-    },
   },
   filters: {
     countFilter(val) {

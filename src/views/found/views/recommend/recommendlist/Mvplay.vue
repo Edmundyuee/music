@@ -1,5 +1,5 @@
 <template>
-  <div ref="mvplay" class="mvplay">
+  <div ref="mvplay" class="mvplay" @touchmove.stop>
     <div class="title">
       <img src="@/assets/img/return.svg" alt="" @click="returns" />
       视频播放
@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import { mvPlay,getMvFirst,getMvUrl,likeMv } from "@/network/found";
+import { mvPlay, getMvFirst, getMvUrl, likeMv } from "@/network/found";
 export default {
   name: "Mvplay",
   data() {
@@ -74,7 +74,7 @@ export default {
       shareCount: 0,
       newMvList: [],
       artistName: "",
-      publishTime: ""
+      publishTime: "",
     };
   },
   methods: {
@@ -92,6 +92,11 @@ export default {
       this.$store.commit("isMvActiveChange", false);
       this.resetData();
       window.onresize = null;
+      var mo = function (e) {
+        e.preventDefault();
+      };
+      document.body.style.overflow = ""; //出现滚动条
+      document.removeEventListener("touchmove", mo, false);
     },
     playMvs(id) {
       this.$store.commit("mvPlayID", id);
@@ -145,12 +150,12 @@ export default {
           this.mvUrl = result.data.url;
         })
         .catch((err) => {});
-        likeMv(newVal).then((result) => {
-            console.log(result);
-            this.newMvList = result.mvs;
-        }).catch((err) => {
-          
-        });
+      likeMv(newVal)
+        .then((result) => {
+          console.log(result);
+          this.newMvList = result.mvs;
+        })
+        .catch((err) => {});
     },
   },
   filters: {
@@ -337,10 +342,10 @@ export default {
   width: 180px;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap; 
+  white-space: nowrap;
   box-sizing: border-box;
 }
-.time{
+.time {
   position: absolute;
   bottom: 0;
   left: 20px;
