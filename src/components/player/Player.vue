@@ -158,9 +158,11 @@ export default {
       //   console.log(this.newname);
       let audio = this.$refs.audios;
       this.isActive = !this.isActive;
-      if (audio.duration) {
+      setTimeout(()=>{
+        if (audio.duration) {
         this.duration = audio.duration;
       }
+      },500)
       let flag = false;
       //   console.log(this.setIntervalID1);
       //歌曲播放改变时间与按钮图标
