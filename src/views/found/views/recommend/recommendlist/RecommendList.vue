@@ -7,7 +7,7 @@
         <div class="recom_list">
             <span v-for="(item,index) in res" :key='index'>
                 <div class="images" @click="recomClick(item.id)">
-                    <img :src="item.picUrl" alt="">
+                    <img v-lazy="item.picUrl" alt="">
                     <div class="play_count">
                         <img src="@/assets/img/headset.svg" alt="">
                         {{item.playCount | filterCount}}
@@ -17,6 +17,7 @@
                     </span>
                 </div>
             </span>
+            <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
         </div>
             
     </div>
@@ -84,14 +85,18 @@ h2{
     position: relative;
     flex: 1;
     align-self: flex-start;
+    display: block;
+    width: 110px;
     /* text-align: center; */
     padding: 12.5px 5px 0px;
-    margin-bottom: 20px;
+    margin-bottom: 20px;  
 }
-.recom_list::after {
+.recom_list>span:last-of-type{
+    margin-right: auto;
+}
+/* .recom_list::after {
     content: '';
     flex: auto;    /* 或者flex: 1 */
-}
 .images{
     display: inline-block;
     position: relative;
@@ -101,6 +106,15 @@ h2{
     width: 100px;
     border-radius: 10px;
     overflow: hidden;
+}
+.images>img[lazy='loading']{
+    width: 50px;
+    height: 50px;
+    display: block;
+    margin: 25px auto 0;
+    /* position: absolute;
+    top: 50%; */
+    /* transform: translate(0,-50%); */
 }
 .title{
     width: 100px;
@@ -134,5 +148,8 @@ h2{
 }
 .recomLists{
     display: none;
+}
+.recom_list>i{
+    width: 110px;
 }
 </style>

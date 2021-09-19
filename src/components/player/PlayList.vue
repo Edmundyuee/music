@@ -12,7 +12,7 @@
         <li
           v-for="(item, index) in list"
           :key="index"
-          ref="lis"
+          ref="lis" 
           @click="playMusic(item.id,index)"
         >
           {{ index }}--{{ item.name }}

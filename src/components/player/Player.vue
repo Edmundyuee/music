@@ -238,6 +238,7 @@ export default {
           // console.log(result + "哈哈");
           this.songs = result.songs[0];
           this.newname = this.songs.name;
+          console.log(result);
           getAlbum(result.songs[0].al.id)
             .then((result) => {
               console.log(result);

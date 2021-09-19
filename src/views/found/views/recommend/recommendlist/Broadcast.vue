@@ -11,7 +11,7 @@
         @click="broadPlay(item.id)"
       >
         <div class="images">
-          <img :src="item.sPicUrl" alt="" />
+          <img v-lazy="item.sPicUrl" alt="" />
           <span class="title">
             {{ item.name }}
           </span>
@@ -20,6 +20,7 @@
           </div>
         </div>
       </span>
+      <i></i><i></i><i></i><i></i><i></i>
     </div>
   </div>
 </template>
@@ -94,8 +95,10 @@ h2 {
   position: relative;
   text-align: center;
   /* padding-top: 12.5px; */
+  width: 150px;
   padding: 12.5px 5px 0px;
   margin-bottom: 20px;
+ 
 }
 .images {
   display: inline-block;
@@ -106,6 +109,15 @@ h2 {
   width: 150px;
   border-radius: 10px;
   overflow: hidden;
+}
+.images>img[lazy='loading']{
+    width: 50px;
+    height: 50px;
+    display: block;
+    margin: 25px auto 0;
+    /* position: absolute;
+    top: 50%; */
+    /* transform: translate(0,-50%); */
 }
 .title {
   width: 150px;
@@ -127,5 +139,10 @@ h2 {
 }
 .svg_img > img {
   width: 20px;
+}
+.broad_list > i {
+  width: 160px;
+  /* margin: 0 5px; */
+  
 }
 </style>
